@@ -16,7 +16,7 @@ class SearchPage extends Component {
   updateQuery = props => {
     const queryParams = queryString.parse(props.location.search);
     const query = queryParams.q;
-    const page = parseInt(queryParams.page || 1);
+    const page = parseInt(queryParams.page || 1, 10);
 
     if (query && (query !== this.state.query || page !== this.props.page)) {
       this.setState({ query: queryParams.q }, () => {
@@ -58,7 +58,7 @@ class SearchPage extends Component {
 
     return (
       <ul>
-        {range(1, Math.ceil(this.props.total / 10)).map(page => (
+        {range(1, Math.ceil(this.props.total / ITEMS_PER_PAGE)).map(page => (
           <li key={page}>
             {this.props.page === page ? (
               `${page}`
