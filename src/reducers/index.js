@@ -1,13 +1,12 @@
-const initialState = {
-  users: [],
-  errorMessage : ""
-}
+import { combineReducers } from "redux";
+import entities from "./entities";
+import search from "./search";
+import profile from "./profile";
 
-function reducer(state = initialState, action) {
-  switch(action.type) {
-    default:
-      return state;
-  }
-}
+const rootReducer = combineReducers({
+  entities,
+  search,
+  profile
+});
 
-export default reducer;
+export default rootReducer;
