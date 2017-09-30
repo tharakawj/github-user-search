@@ -1,9 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import styled from "styled-components";
+
+import ProfileCard from "../components/ProfileCard";
+import Spinner from "../components/Spinner";
 
 import { fetchUser } from "../actions";
 import { getCurrentProfile } from "../selectors/profileSelectors";
 import { getLogin } from "../selectors/commonSelectors";
+
+const ProfilePageContainer = styled.div``;
 
 class ProfilePage extends Component {
   componentDidMount() {
@@ -12,19 +18,28 @@ class ProfilePage extends Component {
     }
   }
 
+  renderProfile() {
+    if (this.props.loading) {
+      return <Spinner />;
+    }
+
+    if (!this.props.profile) {
+      return <div>Couldn't find the profile</div>;
+    }
+
+    return <ProfileCard user={this.props.profile} />;
+  }
+
   render() {
-    return (
-      <div>
-        Profile Page : {this.props.profile ? this.props.profile.name : ""}
-      </div>
-    );
+    return <ProfilePageContainer>{this.renderProfile()}</ProfilePageContainer>;
   }
 }
 
 function mapStateToProps(state, props) {
   return {
     login: getLogin(state, props),
-    profile: getCurrentProfile(state, props)
+    profile: getCurrentProfile(state, props),
+    loading: state.profile.loading
   };
 }
 

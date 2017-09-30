@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import { searchUser } from "../actions";
 import SearchBox from "../components/SearchBox";
-import UserCard from "../components/UserCard";
+import UserListItem from "../components/UserListItem";
 import Pagination from "../components/Pagination";
 import Spinner from "../components/Spinner";
 import { ITEMS_PER_PAGE } from "../constants/searchParams";
@@ -92,11 +92,9 @@ class SearchPage extends Component {
       <div>
         <UserGrid>
           {this.props.result.map(user => (
-            <UserCard
-              key={user.id}
-              username={user.login}
-              avatarUrl={user.avatar_url}
-            />
+            <li key={user.id}>
+              <UserListItem username={user.login} avatarUrl={user.avatar_url} />
+            </li>
           ))}
         </UserGrid>
         {this.props.total > ITEMS_PER_PAGE && this.renderPagination()}

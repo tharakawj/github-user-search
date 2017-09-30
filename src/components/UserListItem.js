@@ -2,29 +2,25 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const Card = styled.li`
+import Card from "./Card";
+
+const Item = styled(Card)`
   min-width: 212px;
-  display: inline-block;
-  background: #fff;
-  box-shadow: 0 1px 4px rgba(1, 1, 1, 0.15);
   margin: 10px;
-  padding: 5px;
-  border-radius: 2px;
 `;
 
-const CardLeft = styled.div`
+const ItemLeft = styled.div`
   display: table-cell;
   vertical-align: top;
   line-height: 0;
   padding-right: 10px;
 `;
 
-const CardRight = styled.div`
+const ItemRight = styled.div`
   display: table-cell;
   vertical-align: top;
   padding-top: 10px;
   max-width: 150px;
-  text-overflow: ellipsis;
 `;
 
 const Avatar = styled.img`
@@ -41,17 +37,17 @@ const Title = styled.div`
   text-overflow: ellipsis;
 `;
 
-const UserCard = ({ username, avatarUrl }) => (
+const UserListItem = ({ username, avatarUrl }) => (
   <Link to={`/users/${username}`}>
-    <Card>
-      <CardLeft>
+    <Item>
+      <ItemLeft>
         <Avatar src={avatarUrl} />
-      </CardLeft>
-      <CardRight>
+      </ItemLeft>
+      <ItemRight>
         <Title>{username}</Title>
-      </CardRight>
-    </Card>
+      </ItemRight>
+    </Item>
   </Link>
 );
 
-export default UserCard;
+export default UserListItem;

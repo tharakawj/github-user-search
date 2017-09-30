@@ -27,7 +27,7 @@ const Container = styled.div`
 
 const Header = styled.div`
   border-bottom: 1px solid #999;
-  margin-bottom: 25px;
+  margin-bottom: 40px;
   overflow: hidden;
 
   @media (min-width: 768px) {
@@ -38,7 +38,7 @@ const Header = styled.div`
 
 const H1 = styled.h1`margin: 30px 5px 10px 5px;`;
 
-const Content = styled.div`min-height: calc(100vh - 180px);`;
+const Content = styled.div`min-height: calc(100vh - 195px);`;
 
 class App extends Component {
   render() {
