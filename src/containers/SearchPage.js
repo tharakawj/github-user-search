@@ -1,14 +1,23 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import queryString from "query-string";
 import { connect } from "react-redux";
-import range from "lodash/range";
+import styled from "styled-components";
 
 import { searchUser } from "../actions";
 import SearchBox from "../components/SearchBox";
+import UserCard from "../components/UserCard";
+import Pagination from "../components/Pagination";
+import Spinner from "../components/Spinner";
 import { ITEMS_PER_PAGE } from "../constants/searchParams";
 
 import { getSearchedUsers } from "../selectors/searchSelectors";
+
+const UserGrid = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0px;
+`;
 
 class SearchPage extends Component {
   state = { query: "" };
@@ -55,33 +64,24 @@ class SearchPage extends Component {
 
   renderPagination = () => {
     const queryParams = queryString.parse(this.props.location.search);
-
     return (
-      <ul>
-        {range(1, Math.ceil(this.props.total / ITEMS_PER_PAGE)).map(page => (
-          <li key={page}>
-            {this.props.page === page ? (
-              `${page}`
-            ) : (
-              <Link
-                to={{
-                  pathname: this.props.match.url,
-                  search: `?q=${queryParams.q}&page=${page}`
-                }}
-              >
-                {page}
-              </Link>
-            )}
-            <br />
-          </li>
-        ))}
-      </ul>
+      <Pagination
+        pageCount={Math.ceil(this.props.total / ITEMS_PER_PAGE)}
+        displayCount={10}
+        currentPage={this.props.page}
+        getPathname={page => {
+          return {
+            pathname: this.props.match.url,
+            search: `?q=${queryParams.q}&page=${page}`
+          };
+        }}
+      />
     );
   };
 
   renderResults = () => {
     if (this.props.loading) {
-      return <div>Loading</div>;
+      return <Spinner />;
     }
 
     if (this.props.result.length === 0) {
@@ -90,14 +90,16 @@ class SearchPage extends Component {
 
     return (
       <div>
-        <ul>
+        <UserGrid>
           {this.props.result.map(user => (
-            <li key={user.id}>
-              <Link to={`/users/${user.login}`}>{user.login} </Link>
-            </li>
+            <UserCard
+              key={user.id}
+              username={user.login}
+              avatarUrl={user.avatar_url}
+            />
           ))}
-        </ul>
-        {this.props.total > 10 && this.renderPagination()}
+        </UserGrid>
+        {this.props.total > ITEMS_PER_PAGE && this.renderPagination()}
       </div>
     );
   };
@@ -105,7 +107,6 @@ class SearchPage extends Component {
   render() {
     return (
       <div>
-        Search Page
         <SearchBox
           onChange={this.handleChange}
           onSubmit={this.handleSubmit}

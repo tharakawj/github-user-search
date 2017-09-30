@@ -1,17 +1,34 @@
 import React from "react";
+import styled from "styled-components";
 
-const SearchPage = ({ value, onChange, onSubmit }) => (
-  <div>
+const Input = styled.input`
+  height: 50px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  font-size: 26px;
+  padding: 10px;
+`;
+
+const SearchBoxContrainer = styled.div`
+  padding: 10px;
+  margin-bottom: 30px;
+`;
+
+const SearchBox = ({ value, onChange, onSubmit }) => (
+  <SearchBoxContrainer>
     <form onSubmit={onSubmit}>
-      <input
+      <Input
         type="text"
         name="search"
         placeholder="Search GitHub users..."
         value={value}
         onChange={onChange}
+        autoComplete="off"
       />
     </form>
-  </div>
+  </SearchBoxContrainer>
 );
 
-export default SearchPage;
+export default SearchBox;
