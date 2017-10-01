@@ -13,6 +13,8 @@ const initialState = {
 function users(state = initialState, action) {
   switch (action.type) {
     case types.SEARCH_USER_SUCCEEDED:
+    case types.FETCH_USER_FOLLOWERS_SUCCEEDED:
+    case types.FETCH_USER_FOLLOWING_SUCCEEDED:
       return update(state, {
         data: {
           $set: merge({}, state.data, action.entities.users)

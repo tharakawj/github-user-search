@@ -3,6 +3,10 @@ import { connect } from "react-redux";
 import { Link, Switch, Route, Redirect } from "react-router-dom";
 import styled from "styled-components";
 
+import RepositoryContainer from "./RepositoryContainer";
+import FollowerContainer from "./FollowerContainer";
+import FollowingContainer from "./FollowingContainer";
+
 import ProfileCard from "../components/ProfileCard";
 import Spinner from "../components/Spinner";
 
@@ -47,16 +51,22 @@ class ProfilePage extends Component {
         <Switch>
           <Route
             path={`${this.props.match.url}`}
-            render={() => <span>Repositories</span>}
+            render={props => (
+              <RepositoryContainer {...props} login={this.props.login} />
+            )}
             exact
           />
           <Route
             path={`${this.props.match.url}/followers`}
-            render={() => <span>Followers</span>}
+            render={props => (
+              <FollowerContainer {...props} login={this.props.login} />
+            )}
           />
           <Route
             path={`${this.props.match.url}/following`}
-            render={() => <span>Following</span>}
+            render={props => (
+              <FollowingContainer {...props} login={this.props.login} />
+            )}
           />
 
           <Route render={() => <Redirect to={`${this.props.match.url}`} />} />

@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
 import { denormalize } from "normalizr";
 import { getUserEntities } from "./commonSelectors";
-import user from "../schemas/user";
+import { user } from "../schemas";
 
 export const getSearchResult = state => state.search.result;
 
