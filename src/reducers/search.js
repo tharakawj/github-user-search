@@ -1,6 +1,7 @@
 import * as types from "../constants/actionTypes";
 
 const initialState = {
+  query: "",
   page: 1,
   result: [],
   total: 0,
@@ -10,11 +11,11 @@ const initialState = {
 
 function search(state = initialState, action) {
   switch (action.type) {
-    case types.SEARCH_USER_REQUEST:
-      return {
-        ...state,
-        page: action.page
-      };
+    // case types.SEARCH_USER_REQUEST:
+    //   return {
+    //     ...state,
+    //     page: action.page
+    //   };
 
     case types.SEARCH_USER_PROGRESSING:
       return {
@@ -27,7 +28,9 @@ function search(state = initialState, action) {
         ...state,
         loading: false,
         result: action.result,
-        total: action.total_count
+        total: action.total_count,
+        query: action.query,
+        page: action.page
       };
 
     case types.SEARCH_USER_FAILED:

@@ -7,8 +7,9 @@ import { ITEMS_PER_PAGE } from "../constants/searchParams";
 import { user, repository } from "../schemas";
 
 function* searchUser(action) {
+  const { query, page } = action;
   yield put({ type: types.SEARCH_USER_PROGRESSING });
-  const url = `search/users?q=${action.query}&page=${action.page}&per_page=${ITEMS_PER_PAGE}`;
+  const url = `search/users?q=${query}&page=${action.page}&per_page=${ITEMS_PER_PAGE}`;
 
   try {
     const result = yield call(request, url);
@@ -17,7 +18,9 @@ function* searchUser(action) {
     yield put({
       type: types.SEARCH_USER_SUCCEEDED,
       ...normalized,
-      total_count
+      total_count,
+      query,
+      page
     });
   } catch (e) {
     yield put({ type: types.SEARCH_USER_FAILED, message: e.message });

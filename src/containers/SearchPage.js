@@ -26,21 +26,19 @@ class SearchPage extends Component {
     }
   };
 
-  search = () => {
+  search = query => {
     this.props.history.replace(`${this.props.match.url}?q=${this.state.query}`);
-    this.props.searchUser(this.state.query, 1);
+    this.props.searchUser(query, 1);
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    this.search();
+    this.search(this.state.query);
   };
 
   handleChange = e => {
     this.setState({ query: e.target.value }, () => {
-      if (this.state.query.length > 2) {
-        this.search();
-      }
+      this.search(this.state.query.length > 2 ? this.state.query : "");
     });
   };
 

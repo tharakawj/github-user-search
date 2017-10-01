@@ -1,17 +1,36 @@
 import {
   SEARCH_USER_REQUEST,
+  SEARCH_USER_SUCCEEDED,
   FETCH_USER_REQUEST,
   FETCH_USER_REPOS_REQUEST,
   FETCH_USER_FOLLOWERS_REQUEST,
   FETCH_USER_FOLLOWING_REQUEST
 } from "../constants/actionTypes";
 
-const searchUser = (query, page) => {
-  return {
-    type: SEARCH_USER_REQUEST,
-    query,
-    page
-  };
+const shouldSearchUser = (query, page, state) => {
+  const { search } = state;
+  return search.query !== query || search.page !== page;
+};
+
+const searchUser = (query, page) => (dispatch, getState) => {
+  if (shouldSearchUser(query, page, getState())) {
+    if (query) {
+      dispatch({
+        type: SEARCH_USER_REQUEST,
+        query,
+        page
+      });
+    } else {
+      dispatch({
+        type: SEARCH_USER_SUCCEEDED,
+        query,
+        page,
+        total_count: 0,
+        entities: {},
+        result: []
+      });
+    }
+  }
 };
 
 const shouldFetchUser = (login, state) => {
