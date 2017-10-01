@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+import UserGrid from "../components/UserGrid";
 import Spinner from "../components/Spinner";
+
 import { fetchUserFollowers } from "../actions";
 import {
   getCurrentUsersFollowers,
@@ -18,6 +20,12 @@ class FollowerContainer extends Component {
   }
 
   render() {
+    // Doesn't show anything if parent is still loading
+    // But continue to fetch data in the background
+    if (this.props.parentLoading) {
+      return null;
+    }
+
     if (this.props.loading) {
       return <Spinner />;
     }
@@ -26,15 +34,7 @@ class FollowerContainer extends Component {
       return <div>"No repositories found!"</div>;
     }
 
-    return (
-      <div>
-        <ul>
-          {this.props.followers.map(user => (
-            <li key={user.id}>{user.login}</li>
-          ))}
-        </ul>
-      </div>
-    );
+    return <UserGrid users={this.props.followers} />;
   }
 }
 

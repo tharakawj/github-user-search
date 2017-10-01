@@ -37,7 +37,7 @@ const Title = styled.div`
   text-overflow: ellipsis;
 `;
 
-const UserListItem = ({ username, avatarUrl }) => (
+const UserGridItem = ({ username, avatarUrl }) => (
   <Link to={`/users/${username}`}>
     <Item>
       <ItemLeft>
@@ -50,4 +50,4 @@ const UserListItem = ({ username, avatarUrl }) => (
   </Link>
 );
 
-export default UserListItem;
+export default UserGridItem;

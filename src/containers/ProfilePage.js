@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link, Switch, Route, Redirect } from "react-router-dom";
+import { NavLink, Switch, Route, Redirect } from "react-router-dom";
 import styled from "styled-components";
 
 import RepositoryContainer from "./RepositoryContainer";
@@ -20,10 +20,39 @@ import { getLogin } from "../selectors/commonSelectors";
 
 const ProfilePageContainer = styled.div``;
 
+const LinkContainer = styled.div`
+  width: 100%;
+  margin-top: 20px;
+`;
+
+const activeClassName = "nav-item-active";
+
+const CollectionLink = styled(NavLink).attrs({
+  activeClassName
+})`
+  display: inline-block;
+  color: #555;
+  font-size: 15px;
+  margin: 5px;
+  padding-bottom: 2px;
+  text-decoration: none;
+  border-bottom: 2px solid #eee;
+
+  &.${activeClassName} {
+    border-bottom: 2px solid #555;
+  }
+`;
+
 class ProfilePage extends Component {
   componentDidMount() {
     if (this.props.login) {
       this.props.fetchUser(this.props.login);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.login !== nextProps.login) {
+      this.props.fetchUser(nextProps.login);
     }
   }
 
@@ -40,36 +69,54 @@ class ProfilePage extends Component {
   }
 
   render() {
+    const { login, loading, match } = this.props;
     return (
       <ProfilePageContainer>
         {this.renderProfile()}
-        <div>
-          <Link to={`${this.props.match.url}`}>Repositories</Link>
-          <Link to={`${this.props.match.url}/followers`}>Followers</Link>
-          <Link to={`${this.props.match.url}/following`}>Following</Link>
-        </div>
+        <LinkContainer>
+          <CollectionLink to={`${match.url}`} exact>
+            Repositories
+          </CollectionLink>
+          <CollectionLink to={`${match.url}/followers`}>
+            Followers
+          </CollectionLink>
+          <CollectionLink to={`${match.url}/following`}>
+            Following
+          </CollectionLink>
+        </LinkContainer>
         <Switch>
           <Route
-            path={`${this.props.match.url}`}
+            path={`${match.url}`}
             render={props => (
-              <RepositoryContainer {...props} login={this.props.login} />
+              <RepositoryContainer
+                {...props}
+                login={login}
+                parentLoading={loading}
+              />
             )}
             exact
           />
           <Route
-            path={`${this.props.match.url}/followers`}
+            path={`${match.url}/followers`}
             render={props => (
-              <FollowerContainer {...props} login={this.props.login} />
+              <FollowerContainer
+                {...props}
+                login={login}
+                parentLoading={loading}
+              />
             )}
           />
           <Route
-            path={`${this.props.match.url}/following`}
+            path={`${match.url}/following`}
             render={props => (
-              <FollowingContainer {...props} login={this.props.login} />
+              <FollowingContainer
+                {...props}
+                login={login}
+                parentLoading={loading}
+              />
             )}
           />
-
-          <Route render={() => <Redirect to={`${this.props.match.url}`} />} />
+          <Route render={() => <Redirect to={`${match.url}`} />} />
         </Switch>
       </ProfilePageContainer>
     );

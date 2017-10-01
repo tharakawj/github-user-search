@@ -72,14 +72,14 @@ const InfoTagText = styled.span`
   font-size: 12px;
 `;
 
-const InfoTag = ({ icon, text }) => (
+export const InfoTag = ({ icon, text }) => (
   <InfoTagContainer>
     <Icon>{icon}</Icon>
     <InfoTagText>{text}</InfoTagText>
   </InfoTagContainer>
 );
 
-const GithubLink = styled.a`
+export const GithubLink = styled.a`
   color: #888;
   position: absolute;
   right: 20px;

@@ -40,7 +40,7 @@ function* fetchUser(action) {
 
 function* fetchUserRepos(action) {
   const { login } = action;
-  const url = `users/${login}/repos?per_page=100`;
+  const url = `users/${login}/repos`;
   yield put({ type: types.FETCH_USER_REPOS_PROGRESSING, login });
 
   try {

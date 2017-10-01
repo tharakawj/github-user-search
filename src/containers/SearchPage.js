@@ -3,21 +3,14 @@ import queryString from "query-string";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
-import { searchUser } from "../actions";
 import SearchBox from "../components/SearchBox";
-import UserListItem from "../components/UserListItem";
+import UserGrid from "../components/UserGrid";
 import Pagination from "../components/Pagination";
 import Spinner from "../components/Spinner";
+
 import { ITEMS_PER_PAGE } from "../constants/searchParams";
-
+import { searchUser } from "../actions";
 import { getSearchedUsers } from "../selectors/searchSelectors";
-
-const UserGrid = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
-  list-style: none;
-  padding: 0px;
-`;
 
 class SearchPage extends Component {
   state = { query: "" };
@@ -90,13 +83,7 @@ class SearchPage extends Component {
 
     return (
       <div>
-        <UserGrid>
-          {this.props.result.map(user => (
-            <li key={user.id}>
-              <UserListItem username={user.login} avatarUrl={user.avatar_url} />
-            </li>
-          ))}
-        </UserGrid>
+        <UserGrid users={this.props.result} />
         {this.props.total > ITEMS_PER_PAGE && this.renderPagination()}
       </div>
     );
