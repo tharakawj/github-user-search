@@ -30,15 +30,16 @@ function* searchUser(action) {
 }
 
 function* fetchUser(action) {
-  yield put({ type: FETCH_USER_PROGRESSING });
-  const url = `users/${action.login}`;
+  const login = action.login;
+  yield put({ type: FETCH_USER_PROGRESSING, login });
+  const url = `users/${login}`;
 
   try {
     const result = yield call(request, url);
     const normalized = normalize(result, user);
-    yield put({ type: FETCH_USER_SUCCEEDED, ...normalized });
+    yield put({ type: FETCH_USER_SUCCEEDED, ...normalized, login });
   } catch (e) {
-    yield put({ type: FETCH_USER_FAILED, message: e.message });
+    yield put({ type: FETCH_USER_FAILED, message: e.message, login });
   }
 }
 

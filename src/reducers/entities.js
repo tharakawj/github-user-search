@@ -1,12 +1,4 @@
-import merge from "lodash/merge";
+import { combineReducers } from "redux";
+import users from "./users";
 
-const initialState = {
-  users: {}
-};
-
-export default function entities(state = initialState, action) {
-  if (action.entities) {
-    return merge({}, state, action.entities);
-  }
-  return state;
-}
+export default combineReducers({ users });

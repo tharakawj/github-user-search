@@ -1,9 +1,22 @@
 import { createSelector } from "reselect";
 
-import { getEntities, getLogin } from "./commonSelectors";
+import { getUsers, getLogin } from "./commonSelectors";
 
-export const getCurrentProfile = createSelector(
-  getEntities,
+export const getCurrentUser = createSelector(
+  getUsers,
   getLogin,
-  (entities, login) => (login in entities.users ? entities.users[login] : null)
+  (users, login) => users.data[login]
+);
+
+export const getCurrentUserLoadingStatus = createSelector(
+  getUsers,
+  getLogin,
+  (users, login) =>
+    login in users.fetchStatus ? users.fetchStatus[login].loading : false
+);
+
+export const getCurrentUserErrorStatus = createSelector(
+  getUsers,
+  getLogin,
+  (users, login) => users.errors[login]
 );

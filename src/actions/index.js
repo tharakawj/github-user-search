@@ -14,8 +14,8 @@ const searchUser = (query, page) => {
 const shouldFetchUser = (login, state) => {
   const { entities } = state;
   const { users } = entities;
-  const userExists = login in users;
-  const completeUser = userExists ? "name" in users[login] : false;
+  const userExists = login in users.data && login in users.fetchStatus;
+  const completeUser = userExists ? users.fetchStatus[login].complete : false;
   return !userExists || !completeUser;
 };
 
