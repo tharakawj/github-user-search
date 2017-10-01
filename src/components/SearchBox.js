@@ -26,6 +26,7 @@ const SearchBox = ({ value, onChange, onSubmit }) => (
         value={value}
         onChange={onChange}
         autoComplete="off"
+        aria-label="search"
         autoFocus
       />
     </form>
