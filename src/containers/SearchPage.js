@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import queryString from "query-string";
 import { connect } from "react-redux";
-import styled from "styled-components";
 
 import SearchBox from "../components/SearchBox";
 import UserGrid from "../components/UserGrid";
@@ -75,6 +74,14 @@ class SearchPage extends Component {
   renderResults = () => {
     if (this.props.loading) {
       return <Spinner />;
+    }
+
+    if (this.props.result.length === 0 && !this.state.query) {
+      return <div>Type something to start searching</div>;
+    }
+
+    if (this.props.result.length === 0 && this.state.query.length < 3) {
+      return <div>Type few more letters to start searching</div>;
     }
 
     if (this.props.result.length === 0) {

@@ -26,6 +26,7 @@ const SearchBox = ({ value, onChange, onSubmit }) => (
         value={value}
         onChange={onChange}
         autoComplete="off"
+        autoFocus
       />
     </form>
   </SearchBoxContrainer>
