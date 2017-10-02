@@ -1,4 +1,4 @@
-import { call, put, all, takeLatest } from "redux-saga/effects";
+import { call, put, all, takeLatest, takeEvery } from "redux-saga/effects";
 import { normalize } from "normalizr";
 
 import request from "../utils/request";
@@ -106,7 +106,7 @@ function* fetchUserFollowing(action) {
 export default function* rootSaga() {
   yield all([
     takeLatest(types.SEARCH_USER_REQUEST, searchUser),
-    takeLatest(types.FETCH_USER_REQUEST, fetchUser),
+    takeEvery(types.FETCH_USER_REQUEST, fetchUser),
     takeLatest(types.FETCH_USER_REPOS_REQUEST, fetchUserRepos),
     takeLatest(types.FETCH_USER_FOLLOWERS_REQUEST, fetchUserFollowers),
     takeLatest(types.FETCH_USER_FOLLOWING_REQUEST, fetchUserFollowing)

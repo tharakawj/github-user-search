@@ -10,11 +10,15 @@ const UserGridContainer = styled.ul`
   padding: 0px;
 `;
 
-const UserGrid = ({ users }) => (
+const UserGrid = ({ users, fetchMore }) => (
   <UserGridContainer>
     {users.map(user => (
       <li key={user.id}>
-        <UserGridItem username={user.login} avatarUrl={user.avatar_url} />
+        <UserGridItem
+          login={user.login}
+          avatarUrl={user.avatar_url}
+          fetchMore={fetchMore}
+        />
       </li>
     ))}
   </UserGridContainer>

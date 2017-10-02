@@ -88,7 +88,16 @@ class SearchPage extends Component {
 
     return (
       <div>
-        <UserGrid users={this.props.result} />
+        <UserGrid
+          users={this.props.result}
+          fetchMore={
+            /*  Make this `true` to asynchronous-ly 
+                shows the number of followers and following of each user. But this leads the app to 
+                exceed Github API rate limit in a short time
+            */
+            false
+          }
+        />
         {this.props.total > ITEMS_PER_PAGE && this.renderPagination()}
       </div>
     );

@@ -31,7 +31,7 @@ class FollowingContainer extends Component {
     }
 
     if (!this.props.following || this.props.following.length === 0) {
-      return <div>"No repositories found!"</div>;
+      return <div>No following found!</div>;
     }
 
     return <UserGrid users={this.props.following} />;
